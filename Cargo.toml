@@ -1,0 +1,16 @@
+[package]
+name = "password-copy"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ctap-hid-fido2 = "3"
+aes-gcm = "0.10"
+rand = "0.8"
+rpassword = "7"
+ciborium = "0.2"
+serde = { version = "1", features = ["derive"] }
+anyhow = "1"
+dirs = "6"
+zeroize = "1"
+libc = "0.2"
