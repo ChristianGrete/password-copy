@@ -4,10 +4,25 @@ A single-purpose CLI tool that decrypts a stored password via YubiKey Bio
 (FIDO2 hmac-secret) and copies it to the system clipboard. Auto-clears after
 10 seconds.
 
+## Background
+
+After 22 years on Apple hardware, I switched from a MacBook Pro M1 Pro to a
+[Star Labs](https://starlabs.systems) StarFighter Ultra running
+[Fedora](https://fedoraproject.org) Linux. No Touch ID — and that's fine. I
+picked up a YubiKey Bio to optionally bring back biometric convenience for a
+few select use cases.
+
+Turns out KeePassXC doesn't support YubiKey Bio for database unlock. This tool
+is a workaround: it securely persists your master password locally, encrypted
+by the YubiKey's FIDO2 hmac-secret, so you can unlock your database via
+copy & paste instead of typing it every single time.
+
+Use at your own risk depending on your threat model.
+
 ## Requirements
 
 - Linux with a Wayland compositor (GNOME, KDE Plasma, Sway, etc.) **or** macOS
-- YubiKey Bio (USB-A) with enrolled fingerprint
+- YubiKey Bio (USB-A or USB-C) with enrolled fingerprint
 - `wl-clipboard` on Linux (provides `wl-copy`) — pre-installed `pbcopy` is used on macOS
 
 Install runtime dependencies (Linux only):

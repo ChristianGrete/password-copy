@@ -12,7 +12,7 @@ copies it to the system clipboard. Auto-clears after 10 seconds.
 - Data file: platform data dir + `com.christiangrete.password`
   - Linux: `~/.local/share/com.christiangrete.password`
   - macOS: `~/Library/Application Support/com.christiangrete.password`
-- YubiKey: YubiKey Bio (USB-A), FIDO2 with hmac-secret extension
+- YubiKey: YubiKey Bio (USB-A or USB-C), FIDO2 with hmac-secret extension
 
 ## Architecture
 
