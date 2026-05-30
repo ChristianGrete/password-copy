@@ -62,9 +62,11 @@ fn get_hmac_secret(credential_id: &[u8], salt: &[u8; 32]) -> Result<Vec<u8>> {
 }
 
 fn setup() -> Result<()> {
-    eprintln!("No stored password found. Setting up.");
+    println!("password-copy: no stored password found. setting up.");
+    print!("password-copy: enter password to store: ");
+    std::io::stdout().flush()?;
     let mut password =
-        rpassword::prompt_password("Enter password to store: ").context("Failed to read password")?;
+        rpassword::read_password().context("Failed to read password")?;
 
     // Lock password memory to prevent swapping
     mlock(password.as_bytes());
@@ -85,7 +87,6 @@ fn setup() -> Result<()> {
         .extensions(&[CredentialExt::HmacSecret(Some(true))])
         .build();
 
-    eprintln!("Touch your YubiKey...");
     let credential = device
         .make_credential_with_args(&make_cred)
         .context("Failed to create FIDO2 credential")?;
@@ -137,7 +138,8 @@ fn setup() -> Result<()> {
     file.set_permissions(fs::Permissions::from_mode(0o600))
         .context("Failed to set data file permissions")?;
 
-    eprintln!("Password stored successfully at {}", path.display());
+    println!("password-copy: credential stored.");
+    println!("  path: {}", path.display());
     Ok(())
 }
 
@@ -146,7 +148,6 @@ fn decrypt_and_copy() -> Result<()> {
     let file = fs::File::open(&path).context("Failed to open data file")?;
     let blob: StoredBlob = ciborium::from_reader(file).context("Failed to parse data file")?;
 
-    eprintln!("Touch your YubiKey...");
     let mut secret = get_hmac_secret(&blob.credential_id, &blob.salt)?;
     mlock(&secret);
 
@@ -182,7 +183,8 @@ fn decrypt_and_copy() -> Result<()> {
     // Clear clipboard now (foreground path completed)
     clear_clipboard()?;
 
-    eprintln!("\rClipboard cleared.{}", " ".repeat(30));
+    print!("\rpassword-copy: clipboard cleared.{}", " ".repeat(20));
+    println!();
     Ok(())
 }
 
@@ -250,12 +252,13 @@ fn countdown(seconds: u64) {
         let remaining = seconds - i;
         let filled = bar_width - (i as usize * bar_width / seconds as usize);
         let empty = bar_width - filled;
-        eprint!(
-            "\rCopied! Clearing in {:>2}s [{}{}]",
+        print!(
+            "\rpassword-copy: clearing in {:>2}s [{}{}]",
             remaining,
             "\u{2588}".repeat(filled),
             "\u{2591}".repeat(empty),
         );
+        let _ = std::io::stdout().flush();
         thread::sleep(Duration::from_secs(1));
     }
 }
@@ -270,7 +273,7 @@ fn mlock(buf: &[u8]) {
 
 fn main() {
     if let Err(e) = run() {
-        eprintln!("Error: {e:#}");
+        eprintln!("password-copy: {e:#}");
         std::process::exit(1);
     }
 }
