@@ -67,7 +67,7 @@ cargo run --release
 cargo run --release
 # → Touch YubiKey once, verify clipboard contains the password
 
-# Verify clipboard clears after 10 seconds
+# Verify clipboard clears after 5 seconds
 ```
 
 ## Commit messages

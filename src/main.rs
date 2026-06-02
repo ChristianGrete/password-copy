@@ -20,7 +20,7 @@ use zeroize::Zeroize;
 
 const RP_ID: &str = "com.christiangrete.password-copy";
 const DATA_FILE: &str = "com.christiangrete.password";
-const CLIPBOARD_CLEAR_SECONDS: u64 = 10;
+const CLIPBOARD_CLEAR_SECONDS: u64 = 5;
 
 #[derive(Serialize, Deserialize)]
 struct StoredBlob {

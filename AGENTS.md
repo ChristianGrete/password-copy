@@ -4,7 +4,7 @@
 
 `password-copy` is a single-purpose Rust CLI tool for Linux and macOS that
 decrypts a stored password via YubiKey Bio (FIDO2 hmac-secret extension) and
-copies it to the system clipboard. Auto-clears after 10 seconds.
+copies it to the system clipboard. Auto-clears after 5 seconds.
 
 - Author: Christian Grete <webmaster@christiangrete.com>
 - Platform: Linux (Wayland) and macOS
@@ -20,7 +20,7 @@ Single binary, single file (`src/main.rs`), no subcommands, no flags, no config.
 
 **Flow:**
 1. If data file missing → setup (prompt password, create FIDO2 credential, encrypt, store)
-2. If data file exists → decrypt (FIDO2 hmac-secret, AES-256-GCM, wl-copy, auto-clear 10s)
+2. If data file exists → decrypt (FIDO2 hmac-secret, AES-256-GCM, wl-copy, auto-clear 5s)
 3. Reset → user deletes `~/.local/share/com.christiangrete.password` manually
 
 **Crypto:**
@@ -97,4 +97,4 @@ pc
 - Sensitive memory pages locked with `mlock` (prevents swap)
 - Data file restricted to mode 0600
 - No network, no daemon, no state beyond the single encrypted file
-- Clipboard auto-clears after 10 seconds
+- Clipboard auto-clears after 5 seconds

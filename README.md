@@ -2,7 +2,7 @@
 
 A single-purpose CLI tool that decrypts a stored password via YubiKey Bio
 (FIDO2 hmac-secret) and copies it to the system clipboard. Auto-clears after
-10 seconds.
+5 seconds.
 
 ## Background
 
@@ -77,7 +77,7 @@ password-copy
 
 1. Touch your YubiKey (fingerprint) once.
 2. The password is copied to your clipboard.
-3. The clipboard is automatically cleared after 10 seconds.
+3. The clipboard is automatically cleared after 5 seconds.
 
 ### Reset
 
